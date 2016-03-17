@@ -7,11 +7,11 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class RecyclerViewChildAttachStateChangeEventOnSubscribe
     implements Observable.OnSubscribe<RecyclerViewChildAttachStateChangeEvent> {
-  private final RecyclerView recyclerView;
+  final RecyclerView recyclerView;
 
   public RecyclerViewChildAttachStateChangeEventOnSubscribe(RecyclerView recyclerView) {
     this.recyclerView = recyclerView;
@@ -19,7 +19,7 @@ final class RecyclerViewChildAttachStateChangeEventOnSubscribe
 
   @Override
   public void call(final Subscriber<? super RecyclerViewChildAttachStateChangeEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final OnChildAttachStateChangeListener listener = new OnChildAttachStateChangeListener() {
       @Override public void onChildViewAttachedToWindow(View childView) {

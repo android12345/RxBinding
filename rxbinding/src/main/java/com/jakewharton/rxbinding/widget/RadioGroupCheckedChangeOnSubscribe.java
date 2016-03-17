@@ -5,17 +5,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class RadioGroupCheckedChangeOnSubscribe implements Observable.OnSubscribe<Integer> {
-  private final RadioGroup view;
+  final RadioGroup view;
 
   public RadioGroupCheckedChangeOnSubscribe(RadioGroup view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Integer> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener() {
       @Override public void onCheckedChanged(RadioGroup group, int checkedId) {

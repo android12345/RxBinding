@@ -5,17 +5,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class ViewSystemUiVisibilityChangeOnSubscribe implements Observable.OnSubscribe<Integer> {
-  private final View view;
+  final View view;
 
-  public ViewSystemUiVisibilityChangeOnSubscribe(View view) {
+  ViewSystemUiVisibilityChangeOnSubscribe(View view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Integer> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final View.OnSystemUiVisibilityChangeListener listener =
         new View.OnSystemUiVisibilityChangeListener() {

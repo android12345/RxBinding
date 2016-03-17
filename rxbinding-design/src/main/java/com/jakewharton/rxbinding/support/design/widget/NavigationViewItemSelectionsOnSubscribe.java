@@ -7,17 +7,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class NavigationViewItemSelectionsOnSubscribe implements Observable.OnSubscribe<MenuItem> {
-  private final NavigationView view;
+  final NavigationView view;
 
-  public NavigationViewItemSelectionsOnSubscribe(NavigationView view) {
+  NavigationViewItemSelectionsOnSubscribe(NavigationView view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super MenuItem> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     NavigationView.OnNavigationItemSelectedListener listener =
         new NavigationView.OnNavigationItemSelectedListener() {

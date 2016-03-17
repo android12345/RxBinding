@@ -7,18 +7,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class TabLayoutSelectionEventOnSubscribe
     implements Observable.OnSubscribe<TabLayoutSelectionEvent> {
-  private final TabLayout view;
+  final TabLayout view;
 
-  public TabLayoutSelectionEventOnSubscribe(TabLayout view) {
+  TabLayoutSelectionEventOnSubscribe(TabLayout view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super TabLayoutSelectionEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener() {
       @Override public void onTabSelected(Tab tab) {

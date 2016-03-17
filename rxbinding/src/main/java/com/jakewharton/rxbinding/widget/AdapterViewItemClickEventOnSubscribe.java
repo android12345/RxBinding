@@ -6,18 +6,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class AdapterViewItemClickEventOnSubscribe
     implements Observable.OnSubscribe<AdapterViewItemClickEvent> {
-  private final AdapterView<?> view;
+  final AdapterView<?> view;
 
   public AdapterViewItemClickEventOnSubscribe(AdapterView<?> view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super AdapterViewItemClickEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

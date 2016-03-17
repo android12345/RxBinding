@@ -5,19 +5,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class RecyclerViewScrollEventOnSubscribe
     implements Observable.OnSubscribe<RecyclerViewScrollEvent> {
-
-  private final RecyclerView recyclerView;
+  final RecyclerView recyclerView;
 
   public RecyclerViewScrollEventOnSubscribe(RecyclerView recyclerView) {
     this.recyclerView = recyclerView;
   }
 
   @Override public void call(final Subscriber<? super RecyclerViewScrollEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final RecyclerView.OnScrollListener listener = new RecyclerView.OnScrollListener() {
       @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

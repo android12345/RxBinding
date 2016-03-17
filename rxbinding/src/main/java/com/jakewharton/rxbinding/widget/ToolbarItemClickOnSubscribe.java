@@ -8,18 +8,18 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 @TargetApi(LOLLIPOP)
 final class ToolbarItemClickOnSubscribe implements Observable.OnSubscribe<MenuItem> {
-  private final Toolbar view;
+  final Toolbar view;
 
-  public ToolbarItemClickOnSubscribe(Toolbar view) {
+  ToolbarItemClickOnSubscribe(Toolbar view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super MenuItem> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

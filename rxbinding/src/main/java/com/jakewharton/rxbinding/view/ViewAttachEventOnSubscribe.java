@@ -6,19 +6,19 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 import static com.jakewharton.rxbinding.view.ViewAttachEvent.Kind.ATTACH;
 import static com.jakewharton.rxbinding.view.ViewAttachEvent.Kind.DETACH;
 
 final class ViewAttachEventOnSubscribe implements Observable.OnSubscribe<ViewAttachEvent> {
-  private final View view;
+  final View view;
 
   ViewAttachEventOnSubscribe(View view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super ViewAttachEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final View.OnAttachStateChangeListener listener = new View.OnAttachStateChangeListener() {
       @Override public void onViewAttachedToWindow(@NonNull final View v) {

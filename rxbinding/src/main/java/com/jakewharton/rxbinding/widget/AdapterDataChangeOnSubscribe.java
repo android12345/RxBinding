@@ -6,18 +6,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class AdapterDataChangeOnSubscribe<T extends Adapter>
     implements Observable.OnSubscribe<T> {
-  private final T adapter;
+  final T adapter;
 
   public AdapterDataChangeOnSubscribe(T adapter) {
     this.adapter = adapter;
   }
 
   @Override public void call(final Subscriber<? super T> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final DataSetObserver observer = new DataSetObserver() {
       @Override public void onChanged() {

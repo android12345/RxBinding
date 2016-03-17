@@ -7,21 +7,21 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 import rx.functions.Func1;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class TextViewEditorActionEventOnSubscribe
     implements Observable.OnSubscribe<TextViewEditorActionEvent> {
-  private final TextView view;
-  private final Func1<? super TextViewEditorActionEvent, Boolean> handled;
+  final TextView view;
+  final Func1<? super TextViewEditorActionEvent, Boolean> handled;
 
-  public TextViewEditorActionEventOnSubscribe(TextView view,
+  TextViewEditorActionEventOnSubscribe(TextView view,
       Func1<? super TextViewEditorActionEvent, Boolean> handled) {
     this.view = view;
     this.handled = handled;
   }
 
   @Override public void call(final Subscriber<? super TextViewEditorActionEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     TextView.OnEditorActionListener listener = new TextView.OnEditorActionListener() {
       @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {

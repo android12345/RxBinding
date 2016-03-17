@@ -6,12 +6,11 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class SeekBarChangeOnSubscribe implements Observable.OnSubscribe<Integer> {
-  private final SeekBar view;
-
-  @Nullable private final Boolean shouldBeFromUser;
+  final SeekBar view;
+  @Nullable final Boolean shouldBeFromUser;
 
   public SeekBarChangeOnSubscribe(SeekBar view, @Nullable Boolean shouldBeFromUser) {
     this.view = view;
@@ -19,7 +18,7 @@ final class SeekBarChangeOnSubscribe implements Observable.OnSubscribe<Integer> 
   }
 
   @Override public void call(final Subscriber<? super Integer> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
       @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

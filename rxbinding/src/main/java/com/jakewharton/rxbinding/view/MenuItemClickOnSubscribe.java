@@ -6,11 +6,11 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 import rx.functions.Func1;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class MenuItemClickOnSubscribe implements Observable.OnSubscribe<Void> {
-  private final MenuItem menuItem;
-  private final Func1<? super MenuItem, Boolean> handled;
+  final MenuItem menuItem;
+  final Func1<? super MenuItem, Boolean> handled;
 
   MenuItemClickOnSubscribe(MenuItem menuItem, Func1<? super MenuItem, Boolean> handled) {
     this.menuItem = menuItem;
@@ -18,7 +18,7 @@ final class MenuItemClickOnSubscribe implements Observable.OnSubscribe<Void> {
   }
 
   @Override public void call(final Subscriber<? super Void> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     MenuItem.OnMenuItemClickListener listener = new MenuItem.OnMenuItemClickListener() {
       @Override public boolean onMenuItemClick(MenuItem item) {

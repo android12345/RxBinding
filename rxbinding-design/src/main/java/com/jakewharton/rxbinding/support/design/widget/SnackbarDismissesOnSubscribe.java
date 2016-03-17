@@ -5,17 +5,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class SnackbarDismissesOnSubscribe implements Observable.OnSubscribe<Integer> {
-  private final Snackbar view;
+  final Snackbar view;
 
-  public SnackbarDismissesOnSubscribe(Snackbar view) {
+  SnackbarDismissesOnSubscribe(Snackbar view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Integer> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     Snackbar.Callback callback = new Snackbar.Callback() {
       @Override public void onDismissed(Snackbar snackbar, int event) {

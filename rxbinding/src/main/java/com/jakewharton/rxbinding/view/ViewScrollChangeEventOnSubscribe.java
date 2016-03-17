@@ -7,19 +7,19 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 import static android.os.Build.VERSION_CODES.M;
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 @TargetApi(M)
 final class ViewScrollChangeEventOnSubscribe
     implements Observable.OnSubscribe<ViewScrollChangeEvent> {
-  private final View view;
+  final View view;
 
   ViewScrollChangeEventOnSubscribe(View view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super ViewScrollChangeEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final View.OnScrollChangeListener listener = new View.OnScrollChangeListener() {
       @Override

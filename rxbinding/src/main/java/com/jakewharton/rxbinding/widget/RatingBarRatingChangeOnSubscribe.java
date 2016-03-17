@@ -5,17 +5,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class RatingBarRatingChangeOnSubscribe implements Observable.OnSubscribe<Float> {
-  private final RatingBar view;
+  final RatingBar view;
 
   public RatingBarRatingChangeOnSubscribe(RatingBar view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Float> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     RatingBar.OnRatingBarChangeListener listener = new RatingBar.OnRatingBarChangeListener() {
       @Override public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {

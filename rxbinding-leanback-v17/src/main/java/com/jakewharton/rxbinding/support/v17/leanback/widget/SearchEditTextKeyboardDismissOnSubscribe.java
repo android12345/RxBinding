@@ -6,17 +6,17 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class SearchEditTextKeyboardDismissOnSubscribe implements Observable.OnSubscribe<Void> {
-  private final SearchEditText view;
+  final SearchEditText view;
 
   public SearchEditTextKeyboardDismissOnSubscribe(SearchEditText view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Void> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     OnKeyboardDismissListener listener = new OnKeyboardDismissListener() {
       @Override

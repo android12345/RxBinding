@@ -7,19 +7,19 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 @TargetApi(JELLY_BEAN)
 final class ViewTreeObserverDrawOnSubscribe implements Observable.OnSubscribe<Void> {
-  private final View view;
+  final View view;
 
-  public ViewTreeObserverDrawOnSubscribe(View view) {
+  ViewTreeObserverDrawOnSubscribe(View view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super Void> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final ViewTreeObserver.OnDrawListener listener = new ViewTreeObserver.OnDrawListener() {
       @Override public void onDraw() {

@@ -5,18 +5,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class SearchViewQueryTextChangeEventsOnSubscribe
     implements Observable.OnSubscribe<SearchViewQueryTextEvent> {
-  private final SearchView view;
+  final SearchView view;
 
   SearchViewQueryTextChangeEventsOnSubscribe(SearchView view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super SearchViewQueryTextEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     SearchView.OnQueryTextListener watcher = new SearchView.OnQueryTextListener() {
       @Override public boolean onQueryTextChange(String s) {

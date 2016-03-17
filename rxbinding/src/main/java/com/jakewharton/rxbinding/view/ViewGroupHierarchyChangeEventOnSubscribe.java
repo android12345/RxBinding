@@ -6,18 +6,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class ViewGroupHierarchyChangeEventOnSubscribe
     implements Observable.OnSubscribe<ViewGroupHierarchyChangeEvent> {
-  private final ViewGroup viewGroup;
+  final ViewGroup viewGroup;
 
   ViewGroupHierarchyChangeEventOnSubscribe(ViewGroup viewGroup) {
     this.viewGroup = viewGroup;
   }
 
   @Override public void call(final Subscriber<? super ViewGroupHierarchyChangeEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     ViewGroup.OnHierarchyChangeListener listener = new ViewGroup.OnHierarchyChangeListener() {
       @Override public void onChildViewAdded(View parent, View child) {

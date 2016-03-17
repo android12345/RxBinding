@@ -5,18 +5,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class SeekBarChangeEventOnSubscribe
     implements Observable.OnSubscribe<SeekBarChangeEvent> {
-  private final SeekBar view;
+  final SeekBar view;
 
   public SeekBarChangeEventOnSubscribe(SeekBar view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super SeekBarChangeEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
       @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

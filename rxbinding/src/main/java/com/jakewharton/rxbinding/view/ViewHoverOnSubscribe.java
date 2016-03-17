@@ -8,19 +8,19 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 import rx.functions.Func1;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class ViewHoverOnSubscribe implements Observable.OnSubscribe<MotionEvent> {
-  private final View view;
-  private final Func1<? super MotionEvent, Boolean> handled;
+  final View view;
+  final Func1<? super MotionEvent, Boolean> handled;
 
-  public ViewHoverOnSubscribe(View view, Func1<? super MotionEvent, Boolean> handled) {
+  ViewHoverOnSubscribe(View view, Func1<? super MotionEvent, Boolean> handled) {
     this.view = view;
     this.handled = handled;
   }
 
   @Override public void call(final Subscriber<? super MotionEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     View.OnHoverListener listener = new View.OnHoverListener() {
       @Override public boolean onHover(View v, @NonNull MotionEvent event) {

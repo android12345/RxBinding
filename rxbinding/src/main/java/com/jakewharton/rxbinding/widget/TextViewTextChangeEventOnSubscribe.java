@@ -7,18 +7,18 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-import static com.jakewharton.rxbinding.internal.Preconditions.checkUiThread;
+import static rx.android.MainThreadSubscription.verifyMainThread;
 
 final class TextViewTextChangeEventOnSubscribe
     implements Observable.OnSubscribe<TextViewTextChangeEvent> {
-  private final TextView view;
+  final TextView view;
 
-  public TextViewTextChangeEventOnSubscribe(TextView view) {
+  TextViewTextChangeEventOnSubscribe(TextView view) {
     this.view = view;
   }
 
   @Override public void call(final Subscriber<? super TextViewTextChangeEvent> subscriber) {
-    checkUiThread();
+    verifyMainThread();
 
     final TextWatcher watcher = new TextWatcher() {
       @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
